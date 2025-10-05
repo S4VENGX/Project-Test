@@ -1,5 +1,6 @@
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -7,9 +8,16 @@ import java.util.Date;
 @Service
 public class TokenService {
 
-    private static final String SECRET_KEY = "your-very-secure-secret-key"; // Should be configured in application.properties
+    @Value("${jwt.secret.key}")
+    private String secretKey; // Retrieved from environment variables or application.properties
+
     private static final long EXPIRATION_TIME = 864_000_000; // 10 days in milliseconds
 
+    /**
+     * Generates a JWT token for the given email.
+     * @param email The email of the user
+     * @return A JWT token string
+     */
     public String generateToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
@@ -19,7 +27,11 @@ public class TokenService {
                 .compact();
     }
 
+    /**
+     * Retrieves the signing key for JWT token generation.
+     * @return The secret key configured in the environment
+     */
     public String getSigningKey() {
-        return SECRET_KEY; // In a real application, this should be retrieved from configuration
+        return secretKey;
     }
 }
