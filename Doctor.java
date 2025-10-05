@@ -1,37 +1,25 @@
-
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "doctors")
 public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "doctor_id")
-    private Integer doctorId;
+    private Long doctorId;
 
-    @Column(name = "name", nullable = false)
     private String name;
-
-    @Column(name = "specialization", nullable = false)
-    private String specialization;
-
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
-
-    @Column(name = "phone", nullable = false)
-    private String phone;
+    private String specialty;
 
     @OneToMany(mappedBy = "doctor")
     private List<Appointment> appointments;
 
-    // Getters and Setters
-    public Integer getDoctorId() {
+    // Getters and setters
+    public Long getDoctorId() {
         return doctorId;
     }
 
-    public void setDoctorId(Integer doctorId) {
+    public void setDoctorId(Long doctorId) {
         this.doctorId = doctorId;
     }
 
@@ -43,28 +31,12 @@ public class Doctor {
         this.name = name;
     }
 
-    public String getSpecialization() {
-        return specialization;
+    public String getSpecialty() {
+        return specialty;
     }
 
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
     }
 
     public List<Appointment> getAppointments() {
